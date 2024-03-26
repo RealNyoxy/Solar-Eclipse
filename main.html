@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Solar Eclipse</title>
+        <style>
+            body {
+                background-color: #000;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+    
+            .circle {
+                height: 200px;
+                width: 200px;
+                border-radius: 50%;
+                background-color: #ff9540;
+                position: relative;
+                box-shadow: 0 0 10px #ff4500, 0 0 40px #ff4500, 0 0 80px #ff4500;
+            }
+    
+            .circle::after {
+                content: "";
+                position: absolute;
+                height: 200px;
+                width: 200px;
+                border-radius: 50%;
+                background-color: #000;
+                animation: eclipse 6s linear infinite alternate;
+            }
+    
+            @keyframes eclipse {
+                0% {
+                    transform: translate(-50px, 50px) scale(0.9);
+                }
+                50%, 75% {
+                    transform: translate(0px, 0px) scale(1.02);
+                    box-shadow: 0 0 10px #f9f3f2, 0 0 80px 8px #c79388;
+                }
+                100% {
+                    transform: translate(50px, -50px) scale(0.9);
+                    box-shadow: none;
+                }
+            }
+    
+            #countdown {
+                font-size: 1.5rem;
+                margin-top: 20px;
+            }
+    </style>
+</head>
+<body>
+    <h2>Solar Eclipse April 8, 2024</h2>
+    <div class="circle"></div>
+    <div id="countdown"></div>
+
+    <script>
+        // Set the date for the countdown (April 8, 2024 10:00 PM UTC)
+        const countdownDate = new Date('April 8, 2024').getTime();
+
+        // Update the countdown every second
+        const countdown = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            // Calculate time units
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the countdown
+            document.getElementById('countdown').innerHTML = `
+                Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s
+            `;
+
+            // If the countdown is over, display a message
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById('countdown').innerHTML = "The solar eclipse is happening now!";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
